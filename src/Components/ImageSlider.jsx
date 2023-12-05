@@ -70,7 +70,7 @@ const ImageSlider = (props) => {
     <>
       <div className="flex justify-center items-center">
         <img
-          className="w-16 h-8 m-1"
+          className="w-16 h-16 m-6"
           src="https://www.svgrepo.com/show/87499/left-arrow.svg"
           onClick={handlePre}
         />
@@ -80,7 +80,7 @@ const ImageSlider = (props) => {
             <img
               key={data}
               className={
-                "w-96 h-96 object-contain " +
+                "w-[600px] h-[600px] object-contain " +
                 (isActive === index ? "block" : "hidden")
               }
               src={imgData[index]}
@@ -91,7 +91,7 @@ const ImageSlider = (props) => {
         <br></br>
         <br></br>
         <img
-          className="w-16 h-8 m-1"
+          className="w-16 h-16 m-6"
           src="https://www.svgrepo.com/show/55208/right-arrow.svg"
           onClick={handleNext}
         />
@@ -99,7 +99,7 @@ const ImageSlider = (props) => {
       <div className="flex justify-center">
          <img 
            src={status}
-           className="w-16 h-8 m-1"
+           className="w-16 h-16"
            onClick={pauseTheAutoSlider}
           />
 

@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import "./App.css";
-import ImageSlider from "./Components/ImageSlider";
-import ImgContext from "./Context/ImgContext";
+// import ImageSlider from "./Components/ImageSlider";
+// import ImgContext from "./Context/ImgContext";
+import ImageGallery from "./Components/ImageGallery";
 function App() {
   const fileRef = useRef();
   const [addFile, setAddFile] = useState([]);
@@ -20,7 +21,9 @@ function App() {
   };
   return (
     <>
-      <div className="flex items-center justify-center w-full">
+     {/* <ImageSlider /> */}
+     <ImageGallery/>
+      {/* <div className="flex items-center justify-center w-full">
         <label
           htmlFor="dropzone-file"
           className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
@@ -45,7 +48,7 @@ function App() {
               <span className="font-semibold">Click to upload</span>
               {/* or drag and
               drop */}
-            </p>
+            {/* </p>
             <p className="text-xs text-gray-500 dark:text-gray-400">
               SVG, PNG, JPG or GIF (MAX. 800x400px)
             </p>
@@ -57,18 +60,17 @@ function App() {
             className="hidden"
           />
         </label>
-      </div>
-      <div className="flex justify-center">
+      </div> */}
+      {/* <div className="flex justify-center">
         <button
           className="bg-gray-500 text-white font-bold py-2 px-4 m-3 rounded"
           onClick={addToSlideShow}
         >
           Add To SlideShow
         </button>
-      </div>
-      <ImgContext.Provider value={addFile} >
-        <ImageSlider />
-      </ImgContext.Provider>
+      </div> */}
+       
+
 
       {/* console.log(addFile[0][0].name) */}
     </>

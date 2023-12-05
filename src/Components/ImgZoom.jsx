@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
-const ImgZoom = ({ urlImg, closed }) => {
+const ImgZoom = ({ urlImg, closed,allImages }) => {
   const zoomedImg = useRef();
-  const [zoomRange, setZoomRange] = useState(0);
+//   const [zoomRange, setZoomRange] = useState(0);
   const [zoomPercentage, setZoomPercentage] = useState(1);
-  const zoomInAndOut = (e) => {
-    setZoomRange(e.target.value);
-  };
+//   console.log(allImages[0].url)
+//   const zoomInAndOut = (e) => {
+//     setZoomRange(e.target.value);
+//   };
   const zoomIn = () => {
     if (zoomPercentage <= 2) {
       zoomedImg.current.style.transform = `scale(${zoomPercentage})`;
@@ -49,7 +50,7 @@ const ImgZoom = ({ urlImg, closed }) => {
               <div className="sm:flex flex justify-center    ">
                 <div className="mt-3 text-center  ">
                   <div className="mt-2 overflow-hidden" onScroll={(e)=>{
-                    console.log(e.target)
+                    // console.log(e.target)
                     // e.target.children[0].style.justifyContent="center";
                     // e.target.style.width="800px";
                     // e.target.style.height="600px";

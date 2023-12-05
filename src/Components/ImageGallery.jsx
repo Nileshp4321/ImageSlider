@@ -4,9 +4,11 @@ import ImgZoom from "./ImgZoom";
 const ImageGallery = () => {
   let [filesData, setFilesData] = useState([]);
   let dupfilesData = [...filesData];
+  let filteredImages=[];
   const inputRef = useRef();
   const [zoomImg, setzoomImg] = useState();
   const [isHovered, setIsHovered] = useState(false);
+
   const handleMouseOver = (e) => {
     setzoomImg(e.target.src);
     setIsHovered(true);
@@ -17,33 +19,57 @@ const ImageGallery = () => {
   const currentTime = new Date().toLocaleString();
   const addImageToGallery = (e) => {
     // console.log(e.target.files[0].name);
-
+    console.log(e.target.files[0].size);
     setFilesData((pre) => {
       const imgInfo = {
         url: e.target.files[0].name,
         uploadedTime: currentTime,
+        imgSize: parseInt(e.target.files[0].size / 1024),
       };
       return [...pre, imgInfo];
     });
   };
   const changeTheInputType = (e) => {
-    if (e.target.value.length>0) {
+    console.log(e.target);
+    if (e.target.value.length > 0) {
       setFilesData((pre) => {
         const imgInfo = {
           url: e.target.value,
           uploadedTime: currentTime,
+          imgSize: parseInt(e.target.size / 1024),
         };
         return [...pre, imgInfo];
       });
     }
   };
+  const currentDate = new Date().toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  });
+
+
+//   const filterGallery=()=>{
+//     alert("hello")
+//     filteredImages=filesData.filter((image) => {
+//         const imagesDate= new Date(image.uploadedTime).toLocaleDateString(undefined, {
+//             year: "numeric",
+//             month: "numeric",
+//             day: "numeric",
+//           });
+//           console.log(filteredImages)
+//         //   dupfilesData=filteredImages;
+//           return currentDate===imagesDate
+//         });
+//   }
+
 
   return (
     <div className="flex w-screen h-auto justify-center items-center">
       <div className="w-[85rem] h-auto bg-gray-200 ms-8">
-      <h1 className="text-5xl text-center m-6">Nilesh Image Gallery</h1>
-      <div className="flex justify-center ">
-       {/* <span><input className='appearance-none  w-96 bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white' type='file' value="" name="uploadImg" /></span> */}
+        <h1 className="text-5xl text-center m-6">Nilesh Image Gallery</h1>
+        <div className="flex justify-center ">
+          {/* <span><input className='appearance-none  w-96 bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white' type='file' value="" name="uploadImg" /></span> */}
           <div className="col-span-full">
             <label
               htmlFor="cover-photo"
@@ -99,6 +125,7 @@ const ImageGallery = () => {
               >
                 Image URL
               </label>
+
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-800 sm:max-w-md">
                   <input
@@ -115,11 +142,31 @@ const ImageGallery = () => {
             </div>
           </div>
         </div>
+        {/* filter */}
+        <div className="flex justify-center items-center mt-5 ">
+          <label
+            for="countries"
+            class=" mb-2 text-sm font-medium text-gray-900 dark:text-black"
+          ></label>
+          <select
+            id="Sort Options"
+            class="w-48 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            onChange={filterGallery}
+          >
+            <option selected >
+              Sort By
+            </option>
+            {/* <option value="size">Size</option> */}
+            <option value="currentTime">Modified by Time</option>
+          </select>
+        </div>
         {/* Cards/Image Gallery  */}
         {/* For Every Card  */}
         <div className="flex flex-row justify-center grid grid-cols-4 flex-wrap ">
           {dupfilesData.map((data, index) => {
-            {/* console.log(data) */}
+            {
+              /* console.log(data) */
+            }
             return (
               <>
                 <div
@@ -135,7 +182,11 @@ const ImageGallery = () => {
                       //   onMouseLeave={handleMouseOut}
                     />
                     {isHovered && (
-                      <ImgZoom urlImg={zoomImg} closed={handleMouseOut} />
+                      <ImgZoom
+                        urlImg={zoomImg}
+                        allImages={filesData}
+                        closed={handleMouseOut}
+                      />
                     )}
                   </div>
                   <div className="px-6 pt-4 pb-2">

@@ -4,7 +4,7 @@ import ImgZoom from "./ImgZoom";
 const ImageGallery = () => {
   let [filesData, setFilesData] = useState([]);
   let dupfilesData = [...filesData];
-  let filteredImages=[];
+  let filteredImages = [];
   const inputRef = useRef();
   const [zoomImg, setzoomImg] = useState();
   const [isHovered, setIsHovered] = useState(false);
@@ -16,10 +16,10 @@ const ImageGallery = () => {
   const handleMouseOut = (e) => {
     setIsHovered(false);
   };
-  const currentTime = new Date().toLocaleString();
+  const currentTime = new Date().toLocaleDateString();
   const addImageToGallery = (e) => {
     // console.log(e.target.files[0].name);
-    console.log(e.target.files[0].size);
+    // console.log(e.target.files[0].size);
     setFilesData((pre) => {
       const imgInfo = {
         url: e.target.files[0].name,
@@ -30,7 +30,7 @@ const ImageGallery = () => {
     });
   };
   const changeTheInputType = (e) => {
-    console.log(e.target);
+    // console.log(e.target);
     if (e.target.value.length > 0) {
       setFilesData((pre) => {
         const imgInfo = {
@@ -42,27 +42,23 @@ const ImageGallery = () => {
       });
     }
   };
-  const currentDate = new Date().toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "numeric",
-    day: "numeric",
-  });
 
-
-  const filterGallery=()=>{
-    alert("hello")
-    filteredImages=filesData.filter((image) => {
-        const imagesDate= new Date(image.uploadedTime).toLocaleDateString(undefined, {
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
-          });
-          console.log(filteredImages)
-        //   dupfilesData=filteredImages;
-          return currentDate===imagesDate
-        });
-  }
-
+//   const filterGallery = () => {
+//     // alert("hello")
+//     filteredImages = filesData.filter((image) => {
+//       const imagesDate = new Date(image.uploadedTime).toLocaleDateString(
+//         undefined,
+//         {
+//           year: "numeric",
+//           month: "numeric",
+//           day: "numeric",
+//         }
+//       );
+//       console.log(imagesDate);
+//       //   dupfilesData=filteredImages;
+//       return currentDate === imagesDate;
+//     });
+//   };
 
   return (
     <div className="flex w-screen h-auto justify-center items-center">
@@ -148,17 +144,19 @@ const ImageGallery = () => {
             for="countries"
             class=" mb-2 text-sm font-medium text-gray-900 dark:text-black"
           ></label>
-          <select
-            id="Sort Options"
-            class="w-48 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            onChange={filterGallery}
-          >
-            <option selected >
-              Sort By
-            </option>
-            {/* <option value="size">Size</option> */}
-            <option value="currentTime">Modified by Time</option>
-          </select>
+          {filesData.length > 1 ? (
+            <select
+              id="Sort Options"
+              class="w-48 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              onChange={()=>{
+                    
+              }}
+            >
+              <option selected>Sort By</option>
+              {/* <option value="size">Size</option> */}
+              <option value="currentTime">Modified by Time</option>
+            </select>
+          ) : null}
         </div>
         {/* Cards/Image Gallery  */}
         {/* For Every Card  */}
@@ -193,7 +191,7 @@ const ImageGallery = () => {
                     <span className=" inline-block  text-sm font-bold text-gray-700 ">
                       {
                         <p className="text-gray-800 mt-5">
-                          Uploaded Time: {data.uploadedTime}
+                          Uploaded Date: {data.uploadedTime}
                         </p>
                       }
                     </span>

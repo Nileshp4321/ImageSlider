@@ -49,19 +49,19 @@ const ImageGallery = () => {
   });
 
 
-//   const filterGallery=()=>{
-//     alert("hello")
-//     filteredImages=filesData.filter((image) => {
-//         const imagesDate= new Date(image.uploadedTime).toLocaleDateString(undefined, {
-//             year: "numeric",
-//             month: "numeric",
-//             day: "numeric",
-//           });
-//           console.log(filteredImages)
-//         //   dupfilesData=filteredImages;
-//           return currentDate===imagesDate
-//         });
-//   }
+  const filterGallery=()=>{
+    alert("hello")
+    filteredImages=filesData.filter((image) => {
+        const imagesDate= new Date(image.uploadedTime).toLocaleDateString(undefined, {
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
+          });
+          console.log(filteredImages)
+        //   dupfilesData=filteredImages;
+          return currentDate===imagesDate
+        });
+  }
 
 
   return (

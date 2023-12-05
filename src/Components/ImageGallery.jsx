@@ -1,25 +1,49 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import ImgZoom from "./ImgZoom";
 
 const ImageGallery = () => {
   let [filesData, setFilesData] = useState([]);
-  let dupfilesData=[...filesData];
+  let dupfilesData = [...filesData];
+  const inputRef = useRef();
+  const [zoomImg, setzoomImg] = useState();
+  const [isHovered, setIsHovered] = useState(false);
+  const handleMouseOver = (e) => {
+    setzoomImg(e.target.src);
+    setIsHovered(true);
+  };
+  const handleMouseOut = (e) => {
+    setIsHovered(false);
+  };
   const currentTime = new Date().toLocaleString();
   const addImageToGallery = (e) => {
     // console.log(e.target.files[0].name);
+
     setFilesData((pre) => {
-        const imgInfo={
-            url:e.target.files[0].name,
-            uploadedTime:currentTime
-        }
-      return [...pre,imgInfo];
-    }); 
+      const imgInfo = {
+        url: e.target.files[0].name,
+        uploadedTime: currentTime,
+      };
+      return [...pre, imgInfo];
+    });
+  };
+  const changeTheInputType = (e) => {
+    if (e.target.value.length>0) {
+      setFilesData((pre) => {
+        const imgInfo = {
+          url: e.target.value,
+          uploadedTime: currentTime,
+        };
+        return [...pre, imgInfo];
+      });
+    }
   };
 
   return (
     <div className="flex w-screen h-auto justify-center items-center">
       <div className="w-[85rem] h-auto bg-gray-200 ms-8">
-        <div className="flex justify-center ">
-          {/* <span><input className='appearance-none  w-96 bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white' type='file' value="" name="uploadImg" /></span> */}
+      <h1 className="text-5xl text-center m-6">Nilesh Image Gallery</h1>
+      <div className="flex justify-center ">
+       {/* <span><input className='appearance-none  w-96 bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white' type='file' value="" name="uploadImg" /></span> */}
           <div className="col-span-full">
             <label
               htmlFor="cover-photo"
@@ -52,6 +76,7 @@ const ImageGallery = () => {
                       name="file-upload"
                       type="file"
                       className="sr-only"
+                      ref={inputRef}
                       onChange={addImageToGallery}
                     />
                   </label>
@@ -63,46 +88,78 @@ const ImageGallery = () => {
               </div>
             </div>
           </div>
+          <div className="flex items-center m-2">
+            <span>Or</span>
+          </div>
+          <div className="flex items-center">
+            <div className="sm:col-span-4">
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Image URL
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-800 sm:max-w-md">
+                  <input
+                    type="url"
+                    name="username"
+                    id="username"
+                    autoComplete="username"
+                    onBlur={changeTheInputType}
+                    className="rounded flex select-none items-center pl-3 pr-5 text-gray-500 sm:text-sm block flex-1 border-0  py-1.5 pl-1 w-60 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="https://www.image.com"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <span className="flex justify-center">
-          <button className="bg-gray-800 text-white w-32 p-2 m-3 rounded">
-            Add Photo
-          </button>
-        </span>
         {/* Cards/Image Gallery  */}
         {/* For Every Card  */}
         <div className="flex flex-row justify-center grid grid-cols-4 flex-wrap ">
           {dupfilesData.map((data, index) => {
+            {/* console.log(data) */}
             return (
               <>
-                <div className="rounded overflow-hidden w-56 h-74 m-10 shadow-xl" key={index} onMouseOver={imgZoom}>
-                  <div
-                    className="flex flex-row h-64  justify-center"
-
-                  >
+                <div
+                  className="rounded overflow-hidden w-56 h-74 m-10 shadow-xl"
+                  key={index}
+                >
+                  <div className="flex flex-row w-56 h-[15rem]  justify-center">
                     <img
-                      className="w-56 h-[15rem] m-8 "
+                      className="w-56 h-[15rem] m-8 object-cover"
                       src={data.url}
                       alt="Sunset in the mountains"
+                      onClick={handleMouseOver}
+                      //   onMouseLeave={handleMouseOut}
                     />
+                    {isHovered && (
+                      <ImgZoom urlImg={zoomImg} closed={handleMouseOut} />
+                    )}
                   </div>
                   <div className="px-6 pt-4 pb-2">
                     <span className=" inline-block  text-sm font-bold text-gray-700 ">
-                      {<p className="text-gray-800">Uploaded Time: {data.uploadedTime}</p>}
+                      {
+                        <p className="text-gray-800 mt-5">
+                          Uploaded Time: {data.uploadedTime}
+                        </p>
+                      }
                     </span>
                   </div>
                   <div className="m-2 flex justify-end">
-                    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" value={data.url} onClick={
-                        (e)=>{
-                           dupfilesData=filesData.filter((item)=>{
-                            console.log(item.url)
-                                // alert(e.target.value)
-                                return item.url!==e.target.value
-                            })
-                            setFilesData(dupfilesData)
-                            // console.log(dupfilesData)
-                        }
-                    }>
+                    <button
+                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                      value={data.url}
+                      onClick={(e) => {
+                        dupfilesData = filesData.filter((item) => {
+                          // alert(e.target.value)
+                          return item.url !== e.target.value;
+                        });
+                        setFilesData(dupfilesData);
+                        // console.log(dupfilesData)
+                      }}
+                    >
                       Delete
                     </button>
                   </div>

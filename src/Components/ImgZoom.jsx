@@ -2,8 +2,26 @@ import React, { useRef, useState } from "react";
 
 const ImgZoom = ({ urlImg, closed,allImages }) => {
   const zoomedImg = useRef();
-//   const [zoomRange, setZoomRange] = useState(0);
   const [zoomPercentage, setZoomPercentage] = useState(1);
+  const [brightness,setBrightness]=useState(50);
+  const [grayscale,setGrayscale]=useState(50);
+  const [blur,setBlur]=useState(0);
+  const brightnessLevel=(e)=>{
+    setBrightness(e.target.value);
+    zoomedImg.current.style.filter=`brightness(${brightness+50+"%"})`
+    
+  }
+  const grayScaleLevel=(e)=>{
+    setGrayscale(e.target.value)
+    zoomedImg.current.style.filter=`grayscale(${grayscale+"%"})`
+  }
+
+  const blurLevel=(e)=>{
+    setBlur(e.target.value);
+    zoomedImg.current.style.filter=`blur(${blur+"px"})`
+  }
+//   const [zoomRange, setZoomRange] = useState(0);
+
 //   console.log(allImages[0].url)
 //   const zoomInAndOut = (e) => {
 //     setZoomRange(e.target.value);
@@ -81,6 +99,19 @@ const ImgZoom = ({ urlImg, closed,allImages }) => {
                  <img src="https://www.svgrepo.com/show/126731/zoom-in.svg" width={50} />
                 </h1>
               </div>
+              <div className="flex justify-start">
+                 <label htmlFor="brightness" className="m-4" >Brightnes Level</label>
+                <input type="range" className="w-64" value={brightness} onChange={brightnessLevel} name="brightness"/>
+              </div>
+              <div className="flex justify-start">
+                 <label htmlFor="grayscale" className="m-4" >Grayscale Level</label>
+                <input type="range" className="w-64" value={grayscale} onChange={grayScaleLevel} name="grayscale"/>
+              </div>
+              <div className="flex justify-start">
+                 <label htmlFor="blur" className="m-4" >Blur Level</label>
+                <input type="range" className="w-64" max={20} value={blur} onChange={blurLevel} name="blur"/>
+              </div>
+              
             </div>
             </div>
             </div>

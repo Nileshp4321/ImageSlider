@@ -24,6 +24,13 @@ const ImgZoom = ({ urlImg, closed,allImages }) => {
       });
     }
   };
+  const moveImage=(e)=>{
+    //   e.target.style.cursor="move"
+    //   e.target.addEventListener("click",(e)=>{
+    //     e.target.style.transform="scale(1.5)";
+    //   })
+      
+  }
 
   return (
     <div
@@ -49,16 +56,12 @@ const ImgZoom = ({ urlImg, closed,allImages }) => {
             <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4  ">
               <div className="sm:flex flex justify-center    ">
                 <div className="mt-3 text-center  ">
-                  <div className="mt-2 overflow-hidden" onScroll={(e)=>{
-                    // console.log(e.target)
-                    // e.target.children[0].style.justifyContent="center";
-                    // e.target.style.width="800px";
-                    // e.target.style.height="600px";
-                  }}>
+                  <div className="mt-2 overflow-hidden overflow-x-scroll overflow-y-scroll" >
                     <img
                       src={urlImg}
                       ref={zoomedImg}
                       className=" object-cover w-[640px] h-[400px]"
+                      onMouseOver={moveImage}
                     />
                   </div>
                 </div>
@@ -69,13 +72,13 @@ const ImgZoom = ({ urlImg, closed,allImages }) => {
                   className="zoomEffect  text-7xl mb-8 mr-2 "
                   onClick={zoomOut}
                 >
-                  -
+                    <img src="https://www.svgrepo.com/show/522350/zoom-out.svg" width={50} />
                 </h1>
                 <h1
                   className="zoomEffect  text-7xl mb-8 ml-2 "
                   onClick={zoomIn}
                 >
-                  +
+                 <img src="https://www.svgrepo.com/show/126731/zoom-in.svg" width={50} />
                 </h1>
               </div>
             </div>

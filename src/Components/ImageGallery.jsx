@@ -4,19 +4,21 @@ import ImgZoom from "./ImgZoom";
 const ImageGallery = () => {
   let [filesData, setFilesData] = useState([]);
   let dupfilesData = [...filesData];
-  let filteredImages = [];
+  //   let filteredImages = [];
   const inputRef = useRef();
+//   const [sortBy,setSortBy]=useState("Oldest");
   const [zoomImg, setzoomImg] = useState();
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseOver = (e) => {
+    e.target.style.cursor="zoom-in"
     setzoomImg(e.target.src);
     setIsHovered(true);
   };
   const handleMouseOut = (e) => {
     setIsHovered(false);
   };
-  const currentTime = new Date().toLocaleDateString();
+  const currentTime = new Date().toLocaleString();
   const addImageToGallery = (e) => {
     // console.log(e.target.files[0].name);
     // console.log(e.target.files[0].size);
@@ -43,22 +45,22 @@ const ImageGallery = () => {
     }
   };
 
-//   const filterGallery = () => {
-//     // alert("hello")
-//     filteredImages = filesData.filter((image) => {
-//       const imagesDate = new Date(image.uploadedTime).toLocaleDateString(
-//         undefined,
-//         {
-//           year: "numeric",
-//           month: "numeric",
-//           day: "numeric",
-//         }
-//       );
-//       console.log(imagesDate);
-//       //   dupfilesData=filteredImages;
-//       return currentDate === imagesDate;
-//     });
-//   };
+  //   const filterGallery = () => {
+  //     // alert("hello")
+  //     filteredImages = filesData.filter((image) => {
+  //       const imagesDate = new Date(image.uploadedTime).toLocaleDateString(
+  //         undefined,
+  //         {
+  //           year: "numeric",
+  //           month: "numeric",
+  //           day: "numeric",
+  //         }
+  //       );
+  //       console.log(imagesDate);
+  //       //   dupfilesData=filteredImages;
+  //       return currentDate === imagesDate;
+  //     });
+  //   };
 
   return (
     <div className="flex w-screen h-auto justify-center items-center">
@@ -87,7 +89,7 @@ const ImageGallery = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-                <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                {/* <div className="mt-4 flex text-sm leading-6 text-gray-600"> */}
                   <label
                     htmlFor="file-upload"
                     className="relative cursor-pointer rounded-md  font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
@@ -102,8 +104,8 @@ const ImageGallery = () => {
                       onChange={addImageToGallery}
                     />
                   </label>
-                  <p className="pl-1">or drag and drop</p>
-                </div>
+                  {/* <p className="pl-1">or drag and drop</p>
+                </div> */}
                 <p className="text-xs leading-5 text-gray-600">
                   PNG, JPG, GIF up to 10MB
                 </p>
@@ -141,30 +143,44 @@ const ImageGallery = () => {
         {/* filter */}
         <div className="flex justify-center items-center mt-5 ">
           <label
-            for="countries"
-            class=" mb-2 text-sm font-medium text-gray-900 dark:text-black"
-          ></label>
+            htmlFor="countries"
+            className="ml-12 font-extrabold m-3 text-sm font-medium text-gray-900 dark:text-black"
+          >
+            Sort By :-
+          </label>
           {filesData.length > 1 ? (
+            <>
             <select
               id="Sort Options"
-              class="w-48 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              onChange={()=>{
-                    
+              className="w-48 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              onChange={(e) => {
+                //   console.log(filesData);
+                //  sortBy==="Oldest"?setSortBy("Latest"):setSortBy("Oldest")
+                  dupfilesData =[...filesData].reverse();
+                  setFilesData(dupfilesData)
+                //   console.log(filesData);
+                
               }}
             >
-              <option selected>Sort By</option>
+              {/* <option selected disabled>-----</option> */}
               {/* <option value="size">Size</option> */}
-              <option value="currentTime">Modified by Time</option>
+              <option value="select" disabled>
+                -------Select--------
+              </option>
+              <option value="Oldest">Modified oldest</option>
+              <option value="Latest">Modified latest</option>
+
+
             </select>
+            </>
+            
           ) : null}
         </div>
         {/* Cards/Image Gallery  */}
-        {/* For Every Card  */}
+        {/* For Every Card  */}        
         <div className="flex flex-row justify-center grid grid-cols-4 flex-wrap ">
+
           {dupfilesData.map((data, index) => {
-            {
-              /* console.log(data) */
-            }
             return (
               <>
                 <div

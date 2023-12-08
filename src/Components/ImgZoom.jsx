@@ -1,31 +1,30 @@
 import React, { useRef, useState } from "react";
 
-const ImgZoom = ({ urlImg, closed,allImages }) => {
+const ImgZoom = ({ urlImg, closed, allImages }) => {
   const zoomedImg = useRef();
   const [zoomPercentage, setZoomPercentage] = useState(1);
-  const [brightness,setBrightness]=useState(50);
-  const [grayscale,setGrayscale]=useState(50);
-  const [blur,setBlur]=useState(0);
-  const brightnessLevel=(e)=>{
+  const [brightness, setBrightness] = useState(0);
+  const [grayscale, setGrayscale] = useState(50);
+  const [blur, setBlur] = useState(0);
+  const brightnessLevel = (e) => {
     setBrightness(e.target.value);
-    zoomedImg.current.style.filter=`brightness(${brightness+50+"%"})`
-    
-  }
-  const grayScaleLevel=(e)=>{
-    setGrayscale(e.target.value)
-    zoomedImg.current.style.filter=`grayscale(${grayscale+"%"})`
-  }
+    zoomedImg.current.style.filter = `brightness(${brightness + 50 + "%"})`;
+  };
+  const grayScaleLevel = (e) => {
+    setGrayscale(e.target.value);
+    zoomedImg.current.style.filter = `grayscale(${grayscale + "%"})`;
+  };
 
-  const blurLevel=(e)=>{
+  const blurLevel = (e) => {
     setBlur(e.target.value);
-    zoomedImg.current.style.filter=`blur(${blur+"px"})`
-  }
-//   const [zoomRange, setZoomRange] = useState(0);
+    zoomedImg.current.style.filter = `blur(${blur + "px"})`;
+  };
+  //   const [zoomRange, setZoomRange] = useState(0);
 
-//   console.log(allImages[0].url)
-//   const zoomInAndOut = (e) => {
-//     setZoomRange(e.target.value);
-//   };
+  //   console.log(allImages[0].url)
+  //   const zoomInAndOut = (e) => {
+  //     setZoomRange(e.target.value);
+  //   };
   const zoomIn = () => {
     if (zoomPercentage <= 2) {
       zoomedImg.current.style.transform = `scale(${zoomPercentage})`;
@@ -42,13 +41,12 @@ const ImgZoom = ({ urlImg, closed,allImages }) => {
       });
     }
   };
-  const moveImage=(e)=>{
+  const moveImage = (e) => {
     //   e.target.style.cursor="move"
     //   e.target.addEventListener("click",(e)=>{
     //     e.target.style.transform="scale(1.5)";
     //   })
-      
-  }
+  };
 
   return (
     <div
@@ -66,7 +64,6 @@ const ImgZoom = ({ urlImg, closed,allImages }) => {
                 type="button"
                 className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
                 onClick={closed}
-                
               >
                 Cancel
               </button>
@@ -74,11 +71,11 @@ const ImgZoom = ({ urlImg, closed,allImages }) => {
             <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4  ">
               <div className="sm:flex flex justify-center    ">
                 <div className="mt-3 text-center  ">
-                  <div className="mt-2 overflow-hidden overflow-x-scroll overflow-y-scroll" >
+                  <div className="mt-2 overflow-hidden overflow-x-scroll overflow-y-scroll">
                     <img
                       src={urlImg}
                       ref={zoomedImg}
-                      className=" object-cover w-[640px] h-[400px]"
+                      className="object-cover w-[640px] h-[400px]"
                       onMouseOver={moveImage}
                     />
                   </div>
@@ -90,33 +87,63 @@ const ImgZoom = ({ urlImg, closed,allImages }) => {
                   className="zoomEffect  text-7xl mb-8 mr-2 "
                   onClick={zoomOut}
                 >
-                    <img src="https://www.svgrepo.com/show/522350/zoom-out.svg" width={50} />
+                  <img
+                    src="https://www.svgrepo.com/show/522350/zoom-out.svg"
+                    width={50}
+                  />
                 </h1>
                 <h1
                   className="zoomEffect  text-7xl mb-8 ml-2 "
                   onClick={zoomIn}
                 >
-                 <img src="https://www.svgrepo.com/show/126731/zoom-in.svg" width={50} />
+                  <img
+                    src="https://www.svgrepo.com/show/126731/zoom-in.svg"
+                    width={50}
+                  />
                 </h1>
               </div>
               <div className="flex justify-start">
-                 <label htmlFor="brightness" className="m-4" >Brightnes Level</label>
-                <input type="range" className="w-64" value={brightness} onChange={brightnessLevel} name="brightness"/>
+                <label htmlFor="blur" className="m-4">
+                  Blur Level
+                </label>
+                <input
+                  type="range"
+                  className="w-64"
+                  max={20}
+                  value={blur}
+                  onChange={blurLevel}
+                  name="blur"
+                />
               </div>
               <div className="flex justify-start">
-                 <label htmlFor="grayscale" className="m-4" >Grayscale Level</label>
-                <input type="range" className="w-64" value={grayscale} onChange={grayScaleLevel} name="grayscale"/>
+                <label htmlFor="brightness" className="m-4">
+                  Brightnes Level
+                </label>
+                <input
+                  type="range"
+                  className="w-64"
+                  value={brightness}
+                  onChange={brightnessLevel}
+                  name="brightness"
+                />
               </div>
               <div className="flex justify-start">
-                 <label htmlFor="blur" className="m-4" >Blur Level</label>
-                <input type="range" className="w-64" max={20} value={blur} onChange={blurLevel} name="blur"/>
+                <label htmlFor="grayscale" className="m-4">
+                  Grayscale Level
+                </label>
+                <input
+                  type="range"
+                  className="w-64"
+                  value={grayscale}
+                  onChange={grayScaleLevel}
+                  name="grayscale"
+                />
               </div>
-              
             </div>
-            </div>
-            </div>
+          </div>
         </div>
-        </div>
+      </div>
+    </div>
   );
 };
 

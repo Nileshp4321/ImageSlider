@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import "./App.css";
-// import ImageSlider from "./Components/ImageSlider";
+// import ImageSlider from "./Components/ImgSLider/ImageSlider";
 // import ImgContext from "./Context/ImgContext";
 import ImageGallery from "./Components/ImageGallery";
 function App() {

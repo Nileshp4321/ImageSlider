@@ -65,8 +65,8 @@ const ImageGallery = () => {
   return (
     <div className="flex w-screen h-auto justify-center items-center">
       <div className="w-[85rem] h-auto bg-gray-200 ms-8">
-        <h1 className="text-5xl text-center m-6">Nilesh Image Gallery</h1>
-        <div className="flex justify-center ">
+        <h1 className="text-5xl text-center m-6">Image Gallery</h1>
+        <div className="flex justify-center flex-wrap">
           {/* <span><input className='appearance-none  w-96 bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white' type='file' value="" name="uploadImg" /></span> */}
           <div className="col-span-full">
             <label
@@ -121,7 +121,7 @@ const ImageGallery = () => {
                 htmlFor="username"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Image URL
+                Image URL 
               </label>
 
               <div className="mt-2">
@@ -141,7 +141,7 @@ const ImageGallery = () => {
           </div>
         </div>
         {/* filter */}
-        <div className="flex justify-center items-center mt-5 ">
+        <div className="flex flex-wrap justify-center items-center mt-5 ">
           <label
             htmlFor="countries"
             className="ml-12 font-extrabold m-3 text-sm font-medium text-gray-900 dark:text-black"
@@ -152,7 +152,7 @@ const ImageGallery = () => {
             <>
             <select
               id="Sort Options"
-              className="w-48 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={(e) => {
                 //   console.log(filesData);
                 //  sortBy==="Oldest"?setSortBy("Latest"):setSortBy("Oldest")
@@ -178,7 +178,7 @@ const ImageGallery = () => {
         </div>
         {/* Cards/Image Gallery  */}
         {/* For Every Card  */}        
-        <div className="flex flex-row justify-center grid grid-cols-4 flex-wrap ">
+        <div className="flex flex-row justify-center flex-wrap ">
 
           {dupfilesData.map((data, index) => {
             return (

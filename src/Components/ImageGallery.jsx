@@ -109,6 +109,11 @@ const ImageGallery = () => {
                 <p className="text-xs leading-5 text-gray-600">
                   PNG, JPG, GIF up to 10MB
                 </p>
+                <p className="text-xs leading-5 text-gray-600">
+                  <p className="text-red-700"> *If Due To Security Purpose The Upload File Will Be Not Able To Show So You Can Also Try To Image Url  </p><p>
+                    
+                  </p>
+                </p>
               </div>
             </div>
           </div>
@@ -132,7 +137,7 @@ const ImageGallery = () => {
                     id="username"
                     autoComplete="username"
                     onBlur={changeTheInputType}
-                    className="rounded flex select-none items-center pl-3 pr-5 text-gray-500 sm:text-sm block flex-1 border-0  py-1.5 pl-1 w-60 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    className="rounded flex select-none items-center pl-3 pr-5 text-gray-500 sm:text-sm block flex-1 border-0  py-1.5 pl-1 w-80 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="https://www.image.com"
                   />
                 </div>

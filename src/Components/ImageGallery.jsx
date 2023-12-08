@@ -110,7 +110,7 @@ const ImageGallery = () => {
                   PNG, JPG, GIF up to 10MB
                 </p>
                 <p className="text-xs leading-5 text-gray-600">
-                  <p className="text-red-700"> *If Due To Security Purpose The Upload File Will Be Not Able To Show So You Can Also Try To Image Url  </p><p>
+                  <p className="text-red-700">   *If Due To Security Purpose The Upload File Will Be Not Able To Show So You Can Also Try To Image Url  </p><p>
                     
                   </p>
                 </p>

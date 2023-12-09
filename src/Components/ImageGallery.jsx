@@ -1,17 +1,20 @@
 import React, { useRef, useState } from "react";
 import ImgZoom from "./ImgZoom";
+import AboutImg from "./AboutImg";
 
 const ImageGallery = () => {
   let [filesData, setFilesData] = useState([]);
+  const [infoClick, isInfoClick] = useState(false);
+  const [currImg,setCurrImg]=useState();
   let dupfilesData = [...filesData];
   //   let filteredImages = [];
   const inputRef = useRef();
-//   const [sortBy,setSortBy]=useState("Oldest");
+  //   const [sortBy,setSortBy]=useState("Oldest");
   const [zoomImg, setzoomImg] = useState();
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseOver = (e) => {
-    e.target.style.cursor="zoom-in"
+    e.target.style.cursor = "zoom-in";
     setzoomImg(e.target.src);
     setIsHovered(true);
   };
@@ -45,6 +48,30 @@ const ImageGallery = () => {
     }
   };
 
+  //download button
+  const downloadImg = (e) => {
+    // const link = document.createElement('a');
+    // link.href = e;
+    // link.download = 'image.jpg'; // Set the download filename here
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link);
+    const link=document.createElement("a");
+    link.href=e;
+    link.download="new picture.jpeg";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+   const aboutImgInfo=(img)=>{
+    setCurrImg(img);
+     isInfoClick(true)
+   }
+   const closeImgInfo=()=>{
+    setCurrImg("");
+    isInfoClick(false);
+   }
   //   const filterGallery = () => {
   //     // alert("hello")
   //     filteredImages = filesData.filter((image) => {
@@ -90,29 +117,32 @@ const ImageGallery = () => {
                   />
                 </svg>
                 {/* <div className="mt-4 flex text-sm leading-6 text-gray-600"> */}
-                  <label
-                    htmlFor="file-upload"
-                    className="relative cursor-pointer rounded-md  font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                  >
-                    <span>Upload a file</span>
-                    <input
-                      id="file-upload"
-                      name="file-upload"
-                      type="file"
-                      className="sr-only"
-                      ref={inputRef}
-                      onChange={addImageToGallery}
-                    />
-                  </label>
-                  {/* <p className="pl-1">or drag and drop</p>
+                <label
+                  htmlFor="file-upload"
+                  className="relative cursor-pointer rounded-md  font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                >
+                  <span>Upload a file</span>
+                  <input
+                    id="file-upload"
+                    name="file-upload"
+                    type="file"
+                    className="sr-only"
+                    ref={inputRef}
+                    onChange={addImageToGallery}
+                  />
+                </label>
+                {/* <p className="pl-1">or drag and drop</p>
                 </div> */}
                 <p className="text-xs leading-5 text-gray-600">
                   PNG, JPG, GIF up to 10MB
                 </p>
                 <p className="text-xs leading-5 text-gray-600">
-                  <p className="text-red-700">   *If Due To Security Purpose The Upload File Will Be Not Able To Show So You Can Also Try To Image Url  </p><p>
-                    
+                  <p className="text-red-700">
+                    {" "}
+                    *If Due To Security Purpose The Upload File Will Be Not Able
+                    To Show So You Can Also Try To Image Url{" "}
                   </p>
+                  <p></p>
                 </p>
               </div>
             </div>
@@ -126,7 +156,7 @@ const ImageGallery = () => {
                 htmlFor="username"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Image URL 
+                Image URL
               </label>
 
               <div className="mt-2">
@@ -147,44 +177,39 @@ const ImageGallery = () => {
         </div>
         {/* filter */}
         <div className="flex flex-wrap justify-center items-center mt-5 ">
-          <label
-            htmlFor="countries"
-            className="ml-12 font-extrabold m-3 text-sm font-medium text-gray-900 dark:text-black"
-          >
-            Sort By :-
-          </label>
           {filesData.length > 1 ? (
             <>
-            <select
-              id="Sort Options"
-              className="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              onChange={(e) => {
-                //   console.log(filesData);
-                //  sortBy==="Oldest"?setSortBy("Latest"):setSortBy("Oldest")
-                  dupfilesData =[...filesData].reverse();
-                  setFilesData(dupfilesData)
-                //   console.log(filesData);
-                
-              }}
-            >
-              {/* <option selected disabled>-----</option> */}
-              {/* <option value="size">Size</option> */}
-              <option value="select" disabled>
-                -------Select--------
-              </option>
-              <option value="Oldest">Modified oldest</option>
-              <option value="Latest">Modified latest</option>
-
-
-            </select>
+              <label
+                htmlFor="countries"
+                className="ml-12 font-extrabold m-3 text-sm font-medium text-gray-900 dark:text-black"
+              >
+                Sort By :-
+              </label>
+              <select
+                id="Sort Options"
+                className="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onChange={(e) => {
+                  //   console.log(filesData);
+                  //  sortBy==="Oldest"?setSortBy("Latest"):setSortBy("Oldest")
+                  dupfilesData = [...filesData].reverse();
+                  setFilesData(dupfilesData);
+                  //   console.log(filesData);
+                }}
+              >
+                {/* <option selected disabled>-----</option> */}
+                {/* <option value="size">Size</option> */}
+                <option value="select" disabled>
+                  -------Select--------
+                </option>
+                <option value="Oldest">Modified oldest</option>
+                <option value="Latest">Modified latest</option>
+              </select>
             </>
-            
           ) : null}
         </div>
         {/* Cards/Image Gallery  */}
-        {/* For Every Card  */}        
+        {/* For Every Card  */}
         <div className="flex flex-row justify-center flex-wrap ">
-
           {dupfilesData.map((data, index) => {
             return (
               <>
@@ -196,7 +221,7 @@ const ImageGallery = () => {
                     <img
                       className="w-56 h-[15rem] m-8 object-cover"
                       src={data.url}
-                      alt="Sunset in the mountains"
+                      alt="Image"
                       onClick={handleMouseOver}
                       //   onMouseLeave={handleMouseOut}
                     />
@@ -209,7 +234,7 @@ const ImageGallery = () => {
                     )}
                   </div>
                   <div className="px-6 pt-4 pb-2">
-                    <span className=" inline-block  text-sm font-bold text-gray-700 ">
+                    <span className=" inline-block text-sm font-bold text-gray-700 ">
                       {
                         <p className="text-gray-800 mt-5">
                           Uploaded Date: {data.uploadedTime}
@@ -217,21 +242,51 @@ const ImageGallery = () => {
                       }
                     </span>
                   </div>
-                  <div className="m-2 flex justify-end">
-                    <button
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                      value={data.url}
-                      onClick={(e) => {
-                        dupfilesData = filesData.filter((item) => {
-                          // alert(e.target.value)
-                          return item.url !== e.target.value;
-                        });
-                        setFilesData(dupfilesData);
-                        // console.log(dupfilesData)
-                      }}
-                    >
-                      Delete
-                    </button>
+                  <div className="flex justify-center m-2">
+                    <div className="m-2 flex justify-start">
+                      <img
+                       className="dowloadimg"
+                        src="https://www.svgrepo.com/show/140007/download-button.svg"
+                        // value={data.url}
+                        alt="downloadbutton"
+                        width={40}
+                        height={30}
+                        onClick={()=>{
+                          downloadImg(data.url)
+                        }}
+                      />
+                    </div>
+                    <div className="m-2 flex justify-end">
+                      <button
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                        value={data.url}
+                        onClick={(e) => {
+                          dupfilesData = filesData.filter((item) => {
+                            // alert(e.target.value)
+                            return item.url !== e.target.value;
+                          });
+                          setFilesData(dupfilesData);
+                          // console.log(dupfilesData)
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                    <div className="m-2 flex justify-start">
+                      <img
+                       className="dowloadimg"
+                        src="https://www.svgrepo.com/show/345223/three-dots-vertical.svg"
+                        alt="downloadbutton"
+                        width={40}
+                        height={30}
+                        onClick={()=>{
+                          aboutImgInfo(data)
+                        }}
+                      />
+                      {
+                        infoClick && (<AboutImg closed={closeImgInfo} currentImg={currImg} />)
+                      }
+                    </div>
                   </div>
                 </div>
               </>

@@ -27,6 +27,7 @@ const ImgZoom = ({ urlImg, closed, allImages }) => {
   //   };
   const zoomIn = () => {
     if (zoomPercentage <= 2) {
+      zoomedImg.current.style.width="600px"
       zoomedImg.current.style.transform = `scale(${zoomPercentage})`;
       setZoomPercentage((pre) => {
         return pre + 0.05;

@@ -6,12 +6,12 @@ const ImageGallery = () => {
   let dupfilesData = [...filesData];
   //   let filteredImages = [];
   const inputRef = useRef();
-//   const [sortBy,setSortBy]=useState("Oldest");
+  //   const [sortBy,setSortBy]=useState("Oldest");
   const [zoomImg, setzoomImg] = useState();
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseOver = (e) => {
-    e.target.style.cursor="zoom-in"
+    e.target.style.cursor = "zoom-in";
     setzoomImg(e.target.src);
     setIsHovered(true);
   };
@@ -90,29 +90,32 @@ const ImageGallery = () => {
                   />
                 </svg>
                 {/* <div className="mt-4 flex text-sm leading-6 text-gray-600"> */}
-                  <label
-                    htmlFor="file-upload"
-                    className="relative cursor-pointer rounded-md  font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                  >
-                    <span>Upload a file</span>
-                    <input
-                      id="file-upload"
-                      name="file-upload"
-                      type="file"
-                      className="sr-only"
-                      ref={inputRef}
-                      onChange={addImageToGallery}
-                    />
-                  </label>
-                  {/* <p className="pl-1">or drag and drop</p>
+                <label
+                  htmlFor="file-upload"
+                  className="relative cursor-pointer rounded-md  font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                >
+                  <span>Upload a file</span>
+                  <input
+                    id="file-upload"
+                    name="file-upload"
+                    type="file"
+                    className="sr-only"
+                    ref={inputRef}
+                    onChange={addImageToGallery}
+                  />
+                </label>
+                {/* <p className="pl-1">or drag and drop</p>
                 </div> */}
                 <p className="text-xs leading-5 text-gray-600">
                   PNG, JPG, GIF up to 10MB
                 </p>
                 <p className="text-xs leading-5 text-gray-600">
-                  <p className="text-red-700">   *If Due To Security Purpose The Upload File Will Be Not Able To Show So You Can Also Try To Image Url  </p><p>
-                    
+                  <p className="text-red-700">
+                    {" "}
+                    *If Due To Security Purpose The Upload File Will Be Not Able
+                    To Show So You Can Also Try To Image Url{" "}
                   </p>
+                  <p></p>
                 </p>
               </div>
             </div>
@@ -126,7 +129,7 @@ const ImageGallery = () => {
                 htmlFor="username"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Image URL 
+                Image URL
               </label>
 
               <div className="mt-2">
@@ -155,36 +158,31 @@ const ImageGallery = () => {
           </label>
           {filesData.length > 1 ? (
             <>
-            <select
-              id="Sort Options"
-              className="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              onChange={(e) => {
-                //   console.log(filesData);
-                //  sortBy==="Oldest"?setSortBy("Latest"):setSortBy("Oldest")
-                  dupfilesData =[...filesData].reverse();
-                  setFilesData(dupfilesData)
-                //   console.log(filesData);
-                
-              }}
-            >
-              {/* <option selected disabled>-----</option> */}
-              {/* <option value="size">Size</option> */}
-              <option value="select" disabled>
-                -------Select--------
-              </option>
-              <option value="Oldest">Modified oldest</option>
-              <option value="Latest">Modified latest</option>
-
-
-            </select>
+              <select
+                id="Sort Options"
+                className="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onChange={(e) => {
+                  //   console.log(filesData);
+                  //  sortBy==="Oldest"?setSortBy("Latest"):setSortBy("Oldest")
+                  dupfilesData = [...filesData].reverse();
+                  setFilesData(dupfilesData);
+                  //   console.log(filesData);
+                }}
+              >
+                {/* <option selected disabled>-----</option> */}
+                {/* <option value="size">Size</option> */}
+                <option value="select" disabled>
+                  -------Select--------
+                </option>
+                <option value="Oldest">Modified oldest</option>
+                <option value="Latest">Modified latest</option>
+              </select>
             </>
-            
           ) : null}
         </div>
         {/* Cards/Image Gallery  */}
-        {/* For Every Card  */}        
+        {/* For Every Card  */}
         <div className="flex flex-row justify-center flex-wrap ">
-
           {dupfilesData.map((data, index) => {
             return (
               <>

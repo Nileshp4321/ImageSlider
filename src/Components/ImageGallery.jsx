@@ -1,10 +1,15 @@
 import React, { useRef, useState } from "react";
 import ImgZoom from "./ImgZoom";
 import AboutImg from "./AboutImg";
+import { addImgToStore } from "./feature/Slice";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const ImageGallery = () => {
   let [filesData, setFilesData] = useState([]);
   const [infoClick, isInfoClick] = useState(false);
+
+  const [imgSave,setSaveImg]=useState();
   const [currImg,setCurrImg]=useState();
   let dupfilesData = [...filesData];
   //   let filteredImages = [];
@@ -12,6 +17,8 @@ const ImageGallery = () => {
   //   const [sortBy,setSortBy]=useState("Oldest");
   const [zoomImg, setzoomImg] = useState();
   const [isHovered, setIsHovered] = useState(false);
+  const dispatch=useDispatch();
+  const images=useSelector(state=>state.imgs);
 
   const handleMouseOver = (e) => {
     e.target.style.cursor = "zoom-in";
@@ -23,7 +30,6 @@ const ImageGallery = () => {
   };
   const currentTime = new Date().toLocaleString();
   const addImageToGallery = (e) => {
-    // console.log(e.target.files[0].name);
     // console.log(e.target.files[0].size);
     setFilesData((pre) => {
       const imgInfo = {
@@ -31,6 +37,12 @@ const ImageGallery = () => {
         uploadedTime: currentTime,
         imgSize: parseInt(e.target.files[0].size / 1024),
       };
+      dispatch(addImgToStore({
+        url: e.target.files[0].name,
+        uploadedTime: currentTime,
+        imgSize: parseInt(e.target.files[0].size / 1024)
+      }))
+      console.log(images)
       return [...pre, imgInfo];
     });
   };
@@ -43,6 +55,11 @@ const ImageGallery = () => {
           uploadedTime: currentTime,
           imgSize: parseInt(e.target.size / 1024),
         };
+        dispatch(addImgToStore({
+          url: e.target.value,
+          uploadedTime: currentTime,
+          imgSize: parseInt(e.target.size / 1024)
+        }))
         return [...pre, imgInfo];
       });
     }
@@ -136,14 +153,10 @@ const ImageGallery = () => {
                 <p className="text-xs leading-5 text-gray-600">
                   PNG, JPG, GIF up to 10MB
                 </p>
-                <p className="text-xs leading-5 text-gray-600">
-                  <p className="text-red-700">
-                    {" "}
+                  <p className="text-xs leading-5 text-gray-600 text-red-700">
                     *If Due To Security Purpose The Upload File Will Be Not Able
                     To Show So You Can Also Try To Image Url{" "}
                   </p>
-                  <p></p>
-                </p>
               </div>
             </div>
           </div>

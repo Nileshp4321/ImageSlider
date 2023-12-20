@@ -1,14 +1,16 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ImgZoom from "./ImgZoom";
 
 const ImageGallery = () => {
   let [filesData, setFilesData] = useState([]);
   let dupfilesData = [...filesData];
+ 
   //   let filteredImages = [];
-  const inputRef = useRef();
+  // const inputRef = useRef();
   //   const [sortBy,setSortBy]=useState("Oldest");
   const [zoomImg, setzoomImg] = useState();
   const [isHovered, setIsHovered] = useState(false);
+  const [noteShow,setNoteShow]=useState(true);
 
   const handleMouseOver = (e) => {
     e.target.style.cursor = "zoom-in";
@@ -34,6 +36,7 @@ const ImageGallery = () => {
   const changeTheInputType = (e) => {
     // console.log(e.target);
     if (e.target.value.length > 0) {
+      setNoteShow(false)
       setFilesData((pre) => {
         const imgInfo = {
           url: e.target.value,
@@ -66,6 +69,9 @@ const ImageGallery = () => {
     <div className="flex w-screen h-auto justify-center items-center">
       <div className="w-[85rem] h-auto bg-gray-200 ms-8">
         <h1 className="text-5xl text-center m-6">Image Gallery</h1>
+        {noteShow&&
+            ( <span className="text-red-900 flex justify-center items-center">*Note First You Paste The URL And When<br></br>You Leave Input Field After That The Image<br></br>Is Added to Gallery</span>)
+            }
         <div className="flex justify-center flex-wrap">
           {/* <span><input className='appearance-none  w-96 bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white' type='file' value="" name="uploadImg" /></span> */}
 {/*   
@@ -78,7 +84,7 @@ const ImageGallery = () => {
                 htmlFor="username"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Image Ok
+                Image URL
               </label>
 
               <div className="mt-2">
@@ -97,7 +103,9 @@ const ImageGallery = () => {
             </div>
           </div>
         </div>
+
         {/* filter */}
+        
         <div className="flex flex-wrap justify-center items-center mt-5 ">
           <label
             htmlFor="countries"

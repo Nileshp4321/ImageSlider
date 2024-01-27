@@ -4,6 +4,7 @@ import AboutImg from "./AboutImg";
 import { addImgToStore } from "./feature/Slice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+ 
 
 const ImageGallery = () => {
   let [filesData, setFilesData] = useState([{

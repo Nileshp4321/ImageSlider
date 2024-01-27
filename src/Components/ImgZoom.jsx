@@ -27,6 +27,8 @@ const ImgZoom = ({ urlImg, closed, allImages }) => {
   //   };
   const zoomIn = () => {
     if (zoomPercentage <= 2) {
+      let rotate=90;
+      console.log(zoomedImg.current)
       zoomedImg.current.style.transform = `scale(${zoomPercentage})`;
       setZoomPercentage((pre) => {
         return pre + 0.05;
@@ -41,11 +43,11 @@ const ImgZoom = ({ urlImg, closed, allImages }) => {
       });
     }
   };
-  const moveImage = (e) => {
-    //   e.target.style.cursor="move"
-    //   e.target.addEventListener("click",(e)=>{
-    //     e.target.style.transform="scale(1.5)";
-    //   })
+  const handleMouseEnter = (e) => {
+    // e.target.style.transform=`rotate(${90}deg)`
+  };
+  const handleMouseLeave = (e) => {
+    //  e.target.style.transform=`rotate(${90}deg)`
   };
 
   return (
@@ -76,7 +78,9 @@ const ImgZoom = ({ urlImg, closed, allImages }) => {
                       src={urlImg}
                       ref={zoomedImg}
                       className="object-cover w-[640px] h-[400px]"
-                      onMouseOver={moveImage}
+                      onMouseOver={handleMouseEnter}
+                      // onMouseLeave={handleMouseLeave}
+                      onMouseOut={handleMouseLeave}
                     />
                   </div>
                 </div>

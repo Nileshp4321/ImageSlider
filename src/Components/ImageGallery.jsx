@@ -1,16 +1,37 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import ImgZoom from "./ImgZoom";
+import AboutImg from "./AboutImg";
+import { addImgToStore } from "./feature/Slice";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const ImageGallery = () => {
-  let [filesData, setFilesData] = useState([]);
+  let [filesData, setFilesData] = useState([{
+        url: "https://media.istockphoto.com/id/1470130937/photo/young-plants-growing-in-a-crack-on-a-concrete-footpath-conquering-adversity-concept.webp?b=1&s=170667a&w=0&k=20&c=IRaA17rmaWOJkmjU_KD29jZo4E6ZtG0niRpIXQN17fc=",
+        uploadedTime: "1/27/2024, 5:01:02 PM",
+        imgSize: 10,
+  },{
+    url: "https://media.istockphoto.com/id/1470130937/photo/young-plants-growing-in-a-crack-on-a-concrete-footpath-conquering-adversity-concept.webp?b=1&s=170667a&w=0&k=20&c=IRaA17rmaWOJkmjU_KD29jZo4E6ZtG0niRpIXQN17fc=",
+    uploadedTime: "1/27/2024, 5:01:02 PM",
+    imgSize: 10,
+},
+{
+  url: "https://media.istockphoto.com/id/1470130937/photo/young-plants-growing-in-a-crack-on-a-concrete-footpath-conquering-adversity-concept.webp?b=1&s=170667a&w=0&k=20&c=IRaA17rmaWOJkmjU_KD29jZo4E6ZtG0niRpIXQN17fc=",
+  uploadedTime: "1/27/2024, 5:01:02 PM",
+  imgSize: 10,
+}]);
+  const [infoClick, isInfoClick] = useState(false);
+
+  const [imgSave,setSaveImg]=useState();
+  const [currImg,setCurrImg]=useState();
   let dupfilesData = [...filesData];
- 
   //   let filteredImages = [];
-  // const inputRef = useRef();
+  const inputRef = useRef();
   //   const [sortBy,setSortBy]=useState("Oldest");
   const [zoomImg, setzoomImg] = useState();
   const [isHovered, setIsHovered] = useState(false);
-  const [noteShow,setNoteShow]=useState(true);
+  const dispatch=useDispatch();
+  const images=useSelector(state=>state.imgs);
 
   const handleMouseOver = (e) => {
     e.target.style.cursor = "zoom-in";
@@ -22,7 +43,6 @@ const ImageGallery = () => {
   };
   const currentTime = new Date().toLocaleString();
   // const addImageToGallery = (e) => {
-  //   // console.log(e.target.files[0].name);
   //   // console.log(e.target.files[0].size);
   //   setFilesData((pre) => {
   //     const imgInfo = {
@@ -30,24 +50,58 @@ const ImageGallery = () => {
   //       uploadedTime: currentTime,
   //       imgSize: parseInt(e.target.files[0].size / 1024),
   //     };
+  //     dispatch(addImgToStore({
+  //       url: e.target.files[0].name,
+  //       uploadedTime: currentTime,
+  //       imgSize: parseInt(e.target.files[0].size / 1024)
+  //     }))
+  //     console.log(images)
   //     return [...pre, imgInfo];
   //   });
   // };
   const changeTheInputType = (e) => {
     // console.log(e.target);
     if (e.target.value.length > 0) {
-      setNoteShow(false)
       setFilesData((pre) => {
         const imgInfo = {
           url: e.target.value,
           uploadedTime: currentTime,
           imgSize: parseInt(e.target.size / 1024),
         };
+        dispatch(addImgToStore({
+          url: e.target.value,
+          uploadedTime: currentTime,
+          imgSize: parseInt(e.target.size / 1024)
+        }))
         return [...pre, imgInfo];
       });
     }
   };
 
+  //download button
+  const downloadImg = (e) => {
+    // const link = document.createElement('a');
+    // link.href = e;
+    // link.download = 'image.jpg'; // Set the download filename here
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link);
+    const link=document.createElement("a");
+    link.href=e;
+    link.download="new picture.jpeg";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+   const aboutImgInfo=(img)=>{
+    setCurrImg(img);
+     isInfoClick(true)
+   }
+   const closeImgInfo=()=>{
+    setCurrImg("");
+    isInfoClick(false);
+   }
   //   const filterGallery = () => {
   //     // alert("hello")
   //     filteredImages = filesData.filter((image) => {
@@ -69,13 +123,20 @@ const ImageGallery = () => {
     <div className="flex w-screen h-auto justify-center items-center">
       <div className="w-[85rem] h-auto bg-gray-200 ms-8">
         <h1 className="text-5xl text-center m-6">Image Gallery</h1>
-        {noteShow&&
-            ( <span className="text-red-900 flex justify-center items-center">*Note First You Paste The URL And When<br></br>You Leave Input Field After That The Image<br></br>Is Added to Gallery</span>)
-            }
         <div className="flex justify-center flex-wrap">
+        {/* //UPLOAD OPTION USING INPUT FILE TYPE FILE */}
           {/* <span><input className='appearance-none  w-96 bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white' type='file' value="" name="uploadImg" /></span> */}
-{/*   
-          <div className="flex items-center m-2">
+          {/* <div className="col-span-full">
+            <label
+              htmlFor="cover-photo"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
+              Upload photo
+            </label>
+            
+          
+          </div> */}
+          {/* <div className="flex items-center m-2">
             <span>Or</span>
           </div> */}
           <div className="flex items-center">
@@ -103,18 +164,16 @@ const ImageGallery = () => {
             </div>
           </div>
         </div>
-
         {/* filter */}
-        
         <div className="flex flex-wrap justify-center items-center mt-5 ">
-          <label
-            htmlFor="countries"
-            className="ml-12 font-extrabold m-3 text-sm font-medium text-gray-900 dark:text-black"
-          >
-            Sort By :-
-          </label>
           {filesData.length > 1 ? (
             <>
+              <label
+                htmlFor="countries"
+                className="ml-12 font-extrabold m-3 text-sm font-medium text-gray-900 dark:text-black"
+              >
+                Sort By :-
+              </label>
               <select
                 id="Sort Options"
                 className="w-36 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -141,17 +200,18 @@ const ImageGallery = () => {
         {/* For Every Card  */}
         <div className="flex flex-row justify-center flex-wrap ">
           {dupfilesData.map((data, index) => {
+            console.log(data)
             return (
               <>
                 <div
                   className="rounded overflow-hidden w-56 h-74 m-10 shadow-xl"
                   key={index}
                 >
-                  <div className="flex flex-row w-56 h-[15rem]  justify-center">
+                  <div className="flex flex-row w-56 h-[15rem] justify-center">
                     <img
                       className="w-56 h-[15rem] m-8 object-cover"
                       src={data.url}
-                      alt="Sunset in the mountains"
+                      alt="Image"
                       onClick={handleMouseOver}
                       //   onMouseLeave={handleMouseOut}
                     />
@@ -164,7 +224,7 @@ const ImageGallery = () => {
                     )}
                   </div>
                   <div className="px-6 pt-4 pb-2">
-                    <span className=" inline-block  text-sm font-bold text-gray-700 ">
+                    <span className=" inline-block text-sm font-bold text-gray-700 ">
                       {
                         <p className="text-gray-800 mt-5">
                           Uploaded Date: {data.uploadedTime}
@@ -172,21 +232,52 @@ const ImageGallery = () => {
                       }
                     </span>
                   </div>
-                  <div className="m-2 flex justify-end">
-                    <button
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                      value={data.url}
-                      onClick={(e) => {
-                        dupfilesData = filesData.filter((item) => {
-                          // alert(e.target.value)
-                          return item.url !== e.target.value;
-                        });
-                        setFilesData(dupfilesData);
-                        // console.log(dupfilesData)
-                      }}
-                    >
-                      Delete
-                    </button>
+                  
+                  <div className="flex justify-center m-2">
+                    <div className="m-2 flex justify-start">
+                      <img
+                       className="dowloadimg"
+                        src="https://www.svgrepo.com/show/140007/download-button.svg"
+                        // value={data.url}
+                        alt="downloadbutton"
+                        width={40}
+                        height={30}
+                        onClick={()=>{
+                          downloadImg(data.url)
+                        }}
+                      />
+                    </div>
+                    <div className="m-2 flex justify-end">
+                      <button
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                        value={data.url}
+                        onClick={(e) => {
+                          dupfilesData = filesData.filter((item) => {
+                            // alert(e.target.value)
+                            return item.url !== e.target.value;
+                          });
+                          setFilesData(dupfilesData);
+                          // console.log(dupfilesData)
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                    <div className="m-2 flex justify-start">
+                      <img
+                       className="dowloadimg"
+                        src="https://www.svgrepo.com/show/345223/three-dots-vertical.svg"
+                        alt="downloadbutton"
+                        width={40}
+                        height={30}
+                        onClick={()=>{
+                          aboutImgInfo(data)
+                        }}
+                      />
+                      {
+                        infoClick && (<AboutImg closed={closeImgInfo} currentImg={currImg} />)
+                      }
+                    </div>
                   </div>
                 </div>
               </>
@@ -203,27 +294,24 @@ export default ImageGallery;
 
 
 
-{/* <div className="col-span-full">
-            <label
-              htmlFor="cover-photo"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Upload photo
-            </label>
-            <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-              <div className="text-center"> */}
-                {/* <svg
-                  className="mx-auto h-12 w-12 text-gray-300"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
-                    clipRule="evenodd"
-                  />
-                </svg> */}
+
+
+
+
+{/* <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10"> */}
+              // <div className="text-center">
+                // <svg
+                //   className="mx-auto h-12 w-12 text-gray-300"
+                //   viewBox="0 0 24 24"
+                //   fill="currentColor"
+                //   aria-hidden="true"
+                // >
+                //   <path
+                //     fillRule="evenodd"
+                //     d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
+                //     clipRule="evenodd"
+                //   />
+                // </svg>
                 {/* <div className="mt-4 flex text-sm leading-6 text-gray-600"> */}
                 {/* <label
                   htmlFor="file-upload"
@@ -244,14 +332,9 @@ export default ImageGallery;
                 {/* <p className="text-xs leading-5 text-gray-600">
                   PNG, JPG, GIF up to 10MB
                 </p>
-                <p className="text-xs leading-5 text-gray-600">
-                  <p className="text-red-700">
-                    {" "}
+                  <p className="text-xs leading-5 text-gray-600 text-red-700">
                     *If Due To Security Purpose The Upload File Will Be Not Able
                     To Show So You Can Also Try To Image Url{" "}
                   </p>
-                  <p></p>
-                </p> */}
-          //     </div>
-          //   </div>
-          // </div>
+              </div>
+            </div> */}

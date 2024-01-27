@@ -6,7 +6,20 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 const ImageGallery = () => {
-  let [filesData, setFilesData] = useState([]);
+  let [filesData, setFilesData] = useState([{
+        url: "https://media.istockphoto.com/id/1470130937/photo/young-plants-growing-in-a-crack-on-a-concrete-footpath-conquering-adversity-concept.webp?b=1&s=170667a&w=0&k=20&c=IRaA17rmaWOJkmjU_KD29jZo4E6ZtG0niRpIXQN17fc=",
+        uploadedTime: "1/27/2024, 5:01:02 PM",
+        imgSize: 10+"KB",
+  },{
+    url: "https://media.istockphoto.com/id/1470130937/photo/young-plants-growing-in-a-crack-on-a-concrete-footpath-conquering-adversity-concept.webp?b=1&s=170667a&w=0&k=20&c=IRaA17rmaWOJkmjU_KD29jZo4E6ZtG0niRpIXQN17fc=",
+    uploadedTime: "1/27/2024, 5:01:02 PM",
+    imgSize: 10+"KB",
+},
+{
+  url: "https://media.istockphoto.com/id/1470130937/photo/young-plants-growing-in-a-crack-on-a-concrete-footpath-conquering-adversity-concept.webp?b=1&s=170667a&w=0&k=20&c=IRaA17rmaWOJkmjU_KD29jZo4E6ZtG0niRpIXQN17fc=",
+  uploadedTime: "1/27/2024, 5:01:02 PM",
+  imgSize: 10+"KB",
+}]);
   const [infoClick, isInfoClick] = useState(false);
 
   const [imgSave,setSaveImg]=useState();
@@ -187,13 +200,14 @@ const ImageGallery = () => {
         {/* For Every Card  */}
         <div className="flex flex-row justify-center flex-wrap ">
           {dupfilesData.map((data, index) => {
+            console.log(data)
             return (
               <>
                 <div
                   className="rounded overflow-hidden w-56 h-74 m-10 shadow-xl"
                   key={index}
                 >
-                  <div className="flex flex-row w-56 h-[15rem]  justify-center">
+                  <div className="flex flex-row w-56 h-[15rem] justify-center">
                     <img
                       className="w-56 h-[15rem] m-8 object-cover"
                       src={data.url}
@@ -218,6 +232,7 @@ const ImageGallery = () => {
                       }
                     </span>
                   </div>
+                  
                   <div className="flex justify-center m-2">
                     <div className="m-2 flex justify-start">
                       <img

@@ -1,6 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 
 const AboutImg = ({closed,currentImg}) => {
+
+  const [isDataCopied,setIsDataCopied]=useState(false);
+
+  const copyImgURL=(e)=>{
+      navigator.clipboard.writeText(e.target.innerHTML)
+      navigator.clipboard.writeText(e.target.innerHTML).then(()=>{
+        alert("Data is Copied SUccesfully");
+      })
+      .catch(()=>{
+        alert("Data is Not Copied");
+      })
+
+  }
+
   return (
     <>
       <div
@@ -23,8 +37,8 @@ const AboutImg = ({closed,currentImg}) => {
                       Image Details
                     </h2>
                     <div className="mt-2 flex flex-col flex-wrap justify-center">
-                      <label htmlFor="size" className="font-bold">Image Name :-</label>
-                      <p className="text-sm m-2 text-gray-500" name="size">
+                      <label htmlFor="size" className="font-bold">Image URL :-</label>
+                      <p className="text-sm m-2 text-gray-500" name="size" onClick={copyImgURL}>
                         {currentImg.url}
                       </p>
                       <label htmlFor="size" className="font-bold">Image Size :-</label>

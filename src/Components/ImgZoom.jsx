@@ -3,14 +3,15 @@ import React, { useRef, useState } from "react";
 const ImgZoom = ({ urlImg, closed, allImages }) => {
   const zoomedImg = useRef();
   const [zoomPercentage, setZoomPercentage] = useState(1);
-  const [brightness, setBrightness] = useState(0);
+  const [brightness, setBrightness] = useState(30);
   const [grayscale, setGrayscale] = useState(50);
   const [blur, setBlur] = useState(0);
 
   const [changeAngle,setChangeAngle]=useState(0);
+
   const brightnessLevel = (e) => {
     setBrightness(e.target.value);
-    zoomedImg.current.style.filter = `brightness(${brightness + 50 + "%"})`;
+    zoomedImg.current.style.filter = `brightness(${brightness+5+ "%"})`;
   };
   const grayScaleLevel = (e) => {
     setGrayscale(e.target.value);
@@ -29,7 +30,7 @@ const ImgZoom = ({ urlImg, closed, allImages }) => {
   //   };
   const zoomIn = () => {
     if (zoomPercentage <= 2) {
-      console.log(zoomedImg.current);
+      // console.log(zoomedImg.current);
       zoomedImg.current.style.transform = `scale(${zoomPercentage})`;
       setZoomPercentage((pre) => {
         return pre + 0.05;
@@ -162,6 +163,7 @@ const ImgZoom = ({ urlImg, closed, allImages }) => {
                 <input
                   type="range"
                   className="w-64"
+                  // minLength={10}
                   value={brightness}
                   onChange={brightnessLevel}
                   name="brightness"

@@ -6,6 +6,8 @@ const ImgZoom = ({ urlImg, closed, allImages }) => {
   const [brightness, setBrightness] = useState(0);
   const [grayscale, setGrayscale] = useState(50);
   const [blur, setBlur] = useState(0);
+
+  const [changeAngle,setChangeAngle]=useState(0);
   const brightnessLevel = (e) => {
     setBrightness(e.target.value);
     zoomedImg.current.style.filter = `brightness(${brightness + 50 + "%"})`;
@@ -27,8 +29,7 @@ const ImgZoom = ({ urlImg, closed, allImages }) => {
   //   };
   const zoomIn = () => {
     if (zoomPercentage <= 2) {
-      let rotate=90;
-      console.log(zoomedImg.current)
+      console.log(zoomedImg.current);
       zoomedImg.current.style.transform = `scale(${zoomPercentage})`;
       setZoomPercentage((pre) => {
         return pre + 0.05;
@@ -49,7 +50,18 @@ const ImgZoom = ({ urlImg, closed, allImages }) => {
   const handleMouseLeave = (e) => {
     //  e.target.style.transform=`rotate(${90}deg)`
   };
-
+  const clockWiseRotate=(e)=>{
+    setChangeAngle((pre)=>{
+      return pre+90
+    })
+    zoomedImg.current.style.transform=`rotate(${changeAngle}deg)`
+  }
+  const AntiClockWiseRotate=(e)=>{
+    setChangeAngle((pre)=>{
+      return pre-90
+    })
+    zoomedImg.current.style.transform=`rotate(${changeAngle}deg)`
+  }
   return (
     <div
       className="relative z-10"
@@ -76,6 +88,7 @@ const ImgZoom = ({ urlImg, closed, allImages }) => {
                   <div className="mt-2 overflow-hidden overflow-x-scroll overflow-y-scroll">
                     <img
                       src={urlImg}
+                      alt="Some issue is there on server side"
                       ref={zoomedImg}
                       className="object-cover w-[640px] h-[400px]"
                       onMouseOver={handleMouseEnter}
@@ -88,10 +101,21 @@ const ImgZoom = ({ urlImg, closed, allImages }) => {
 
               <div className="flex justify-center items-center p-5">
                 <h1
+                  className="zoomEffect  text-7xl mb-8 mr-8 ml-2 "
+                  onClick={clockWiseRotate}
+                >
+                  <img
+                    alt="Some issue is there on server side"
+                    src="https://www.svgrepo.com/show/533711/rotate-cw.svg"
+                    width={50}
+                  />
+                </h1>
+                <h1
                   className="zoomEffect  text-7xl mb-8 mr-2 "
                   onClick={zoomOut}
                 >
                   <img
+                    alt="Some issue is there on server side"
                     src="https://www.svgrepo.com/show/522350/zoom-out.svg"
                     width={50}
                   />
@@ -101,7 +125,19 @@ const ImgZoom = ({ urlImg, closed, allImages }) => {
                   onClick={zoomIn}
                 >
                   <img
+                    alt="Some issue is there on server side"
                     src="https://www.svgrepo.com/show/126731/zoom-in.svg"
+                    width={50}
+                  />
+                </h1>
+
+                <h1
+                  className="zoomEffect  text-7xl mb-8 mr-2 ml-8 "
+                  onClick={AntiClockWiseRotate}
+                >
+                  <img
+                    alt="Some issue is there on server side"
+                    src="https://www.svgrepo.com/show/533710/rotate-ccw.svg"
                     width={50}
                   />
                 </h1>

@@ -10,17 +10,17 @@ const ImageGallery = () => {
     {
       url: "https://media.istockphoto.com/id/1470130937/photo/young-plants-growing-in-a-crack-on-a-concrete-footpath-conquering-adversity-concept.webp?b=1&s=170667a&w=0&k=20&c=IRaA17rmaWOJkmjU_KD29jZo4E6ZtG0niRpIXQN17fc=",
       uploadedTime: "1/27/2024, 5:01:02 PM",
-      imgSize: 10 + "KB",
+      imgSize:10,
     },
     {
       url: "https://cdn.pixabay.com/photo/2016/07/07/16/46/dice-1502706_640.jpg",
       uploadedTime: "1/27/2024, 5:01:02 PM",
-      imgSize: 10 + "KB",
+      imgSize: 10,
     },
     {
       url: "https://media.istockphoto.com/id/1295274245/photo/random-multicolored-spheres-computer-generated-abstract-form-of-large-and-small-balls-3d.jpg?s=612x612&w=0&k=20&c=q7NOl28YxIIOqKu6em50VlKrg6ISFyVww_nLOCr5W_A=",
       uploadedTime: "1/27/2024, 5:01:02 PM",
-      imgSize: 10 + "KB",
+      imgSize: 10,
     },
   ]);
   const [infoClick, isInfoClick] = useState(false);
@@ -34,7 +34,7 @@ const ImageGallery = () => {
   const [zoomImg, setzoomImg] = useState();
   const [isHovered, setIsHovered] = useState(false);
   const dispatch = useDispatch();
-  
+
   // const images = useSelector((state) => state.imgs);
 
   const handleMouseOver = (e) => {
@@ -45,6 +45,13 @@ const ImageGallery = () => {
   const handleMouseOut = (e) => {
     setIsHovered(false);
   };
+  const handleHoverZoom=(e)=>{
+    e.target.style.transform="scaleY(1.03)";
+      // console.log()
+  }
+  const handleRemoveHoverZoom=(e)=>{
+    e.target.style.transform="scale(1)";
+  }
   const currentTime = new Date().toLocaleString();
   // const addImageToGallery = (e) => {
   //   // console.log(e.target.files[0].size);
@@ -186,10 +193,28 @@ const ImageGallery = () => {
                 onChange={(e) => {
                   //   console.log(filesData);
                   //  sortBy==="Oldest"?setSortBy("Latest"):setSortBy("Oldest")
-                  if (e.target.value === "Oldest" || e.target.value === "Latest") {
+                  if (
+                    e.target.value === "Oldest" ||
+                    e.target.value === "Latest"
+                  ) {
                     dupfilesData = [...filesData].reverse();
                     setFilesData(dupfilesData);
-                  }
+                  } 
+                  // else if (e.target.value === "HighToLow") {
+                  //   // Sort the array based on imgSize
+                  //   const sortedFilesData = [...filesData].sort(
+                  //     (a, b) => a.imgSize - b.imgSize
+                  //   );
+                  //   console.log(sortedFilesData)
+                  //   // setFilesData(sortedFilesData);
+                  // }else if (e.target.value === "LowToHigh") {
+                  //   // Sort the array based on imgSize
+                  //   const sortedFilesData = [...filesData].sort(
+                  //     (a, b) => a.imgSize + b.imgSize
+                  //   );
+                  //   console.log(sortedFilesData)
+                  //   // setFilesData(sortedFilesData);
+                  // }
                 }}
               >
                 {/* <option selected disabled>-----</option> */}
@@ -199,7 +224,8 @@ const ImageGallery = () => {
                 </option>
                 <option value="Oldest">Modified By Oldest</option>
                 <option value="Latest">Modified By Latest</option>
-                {/* <option value="Size">Modified By Size</option> */}
+                {/* <option value="HighToLow">Modified By Size</option>
+                <option value="LowToHigh">Modified By Size</option> */}
               </select>
             </>
           ) : null}
@@ -220,6 +246,8 @@ const ImageGallery = () => {
                       src={data.url}
                       alt="This is not loading Properly due to some issue"
                       onClick={handleMouseOver}
+                      onMouseOver={handleHoverZoom}
+                      onMouseOut={handleRemoveHoverZoom}
                       //   onMouseLeave={handleMouseOut}
                     />
                     {isHovered && (
